@@ -205,18 +205,17 @@ class TemplateClassifier:
         :param level:   0: Only CountVectorizer Model & Templates
                         1: CountVectorizer Model & Templates
                             + Form Clusters
-                        2: All
         :return: None
         """
         if level == 0:
             dump({'cv': self.cv,
-                  'templates_': self.templates_}, open(object_name, 'wb+'))
+                  'templates_': self.templates_,
+                  'MIN_TOKENS': self.MIN_TOKENS}, open(object_name, 'wb+'))
         elif level == 1:
             dump({'cv': self.cv,
                   'templates_': self.templates_,
-                  'km': self.km}, open(object_name, 'wb+'))
-        elif level == 2:
-            dump(self, open(object_name, 'wb+'))
+                  'km': self.km,
+                  'MIN_TOKENS': self.MIN_TOKENS}, open(object_name, 'wb+'))
         else:
             raise ValueError("Invalid Level given")
 
@@ -235,14 +234,11 @@ class TemplateClassifier:
         if level == 0:
             self.cv = cache.get('cv', None)
             self.templates_ = cache.get('templates_', None)
+            self.templates_ = cache.get('MIN_TOKENS', None)
         elif level == 1:
             self.cv = cache.get('cv', None)
             self.templates_ = cache.get('templates_', None)
+            self.templates_ = cache.get('MIN_TOKENS', None)
             self.km = cache.get('km', None)
-        elif level == 2:
-            if not isinstance(cache, TemplateClassifier):
-                ValueError(f"Pickle Load Failed. Invalid pickle object - {type(cache)} for self of "
-                           f"type - {type(TemplateClassifier)}")
-            self = cache
         else:
             raise ValueError("Invalid Level given")
