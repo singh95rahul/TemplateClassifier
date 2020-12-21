@@ -65,20 +65,24 @@ class TemplateClassifier:
             data = pd.Series(data)
 
         if self.__form_template_data is None:
-            print(" |+ Extracting templates +|")
+            print(" |+ Analyzing Contents +|")
             if template_sep is not None:
+                print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
                 data = data.str.split(template_sep)
                 data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
-            data_trans_df = self.__fit_cv(data, save_cv=True, **kwargs)
+                print(" Done +|")
+
+            data_trans_df = self.__fit_cv(data, **kwargs)
 
             # Filtering Templates that had some token
-            print(" |+ Generating Standard templates +|")
+            print(" |+ Generating Standard templates.. ", end='')
             self.__form_template_data = data_trans_df[
                 (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
             self.__form_template_data = pd.DataFrame(self.__form_template_data)
+            print(" Done +|")
 
+        print(" |+ Fitting K-Means Cluster +|")
         if n_clusters is not None and isinstance(n_clusters, int) and n_clusters > 1:
-            print(" |+ Fitting K-Means Cluster +|")
             km = KMeans(n_clusters=n_clusters)
             km.fit(self.__form_template_data)
             self.km = km
@@ -138,7 +142,7 @@ class TemplateClassifier:
             print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
             data = data.str.split(template_sep.lower())
             data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
-        print(" Done +|")
+            print(" Done +|")
 
         data_trans_df = self.__fit_cv(data, **kwargs)
 
