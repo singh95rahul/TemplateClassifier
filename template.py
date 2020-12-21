@@ -189,9 +189,6 @@ class TemplateClassifier:
 
     # Convert token index to label
     def get_form_labels(self, form_index=None):
-        if form_index is not None and not isinstance(form_index, list):
-            return TypeError(f"Expected type list, received - {type(form_index)}")
-
         if form_index is None:
             form_index = self.templates_.keys()
 
@@ -234,11 +231,11 @@ class TemplateClassifier:
         if level == 0:
             self.cv = cache.get('cv', None)
             self.templates_ = cache.get('templates_', None)
-            self.templates_ = cache.get('MIN_TOKENS', None)
+            self.MIN_TOKENS = cache.get('MIN_TOKENS', None)
         elif level == 1:
             self.cv = cache.get('cv', None)
             self.templates_ = cache.get('templates_', None)
-            self.templates_ = cache.get('MIN_TOKENS', None)
+            self.MIN_TOKENS = cache.get('MIN_TOKENS', None)
             self.km = cache.get('km', None)
         else:
             raise ValueError("Invalid Level given")
