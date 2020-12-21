@@ -159,7 +159,7 @@ class TemplateClassifier:
         print(" Done +|")
         return
 
-    def __get_form_label(self, x):
+    def __classify_token_to_form(self, x):
         for (label, _template) in self.templates_.items():
             if len(set(x).intersection(_template)) >= self.MIN_TOKENS:
                 return label
@@ -183,9 +183,19 @@ class TemplateClassifier:
             x = pd.Series(x)
 
         temp = self.cv.transform(x)
-        form_label = pd.DataFrame(temp.toarray()).apply(lambda _x: self.__get_form_label(_x[_x > 0].index), axis=1)
-        form_label = list(filter(lambda _x: _x != -1, form_label))
+        form_label = pd.DataFrame(temp.toarray()).apply(lambda _x: self.__classify_token_to_form(_x[_x > 0].index),
+                                                        axis=1)
         return form_label
+
+    # Convert token index to label
+    def get_form_labels(self, form_index=None):
+        if form_index is not None and not isinstance(form_index, list):
+            return TypeError(f"Expected type list, received - {type(form_index)}")
+
+        if form_index is None:
+            form_index = self.templates_.keys()
+
+        return [(e, {v: k for k, v in self.cv.vocabulary_.items()}[e]) for e in form_index]
 
     # Load TemplateClassifier Model
     def save_model(self, object_name, level=0):
@@ -206,7 +216,7 @@ class TemplateClassifier:
                   'templates_': self.templates_,
                   'km': self.km}, open(object_name, 'wb+'))
         elif level == 2:
-            dump({'self': self}, open(object_name, 'wb+'))
+            dump(self, open(object_name, 'wb+'))
         else:
             raise ValueError("Invalid Level given")
 
@@ -230,6 +240,9 @@ class TemplateClassifier:
             self.templates_ = cache.get('templates_', None)
             self.km = cache.get('km', None)
         elif level == 2:
-            self = cache.get('self', None)
+            if not isinstance(cache, TemplateClassifier):
+                ValueError(f"Pickle Load Failed. Invalid pickle object - {type(cache)} for self of "
+                           f"type - {type(TemplateClassifier)}")
+            self = cache
         else:
             raise ValueError("Invalid Level given")
