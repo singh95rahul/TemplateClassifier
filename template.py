@@ -17,7 +17,7 @@ class TemplateClassifier:
     def __init__(self, min_tokens_per_template):
         """
         Constructor for TemplateClassifier
-        :param min_tokens_per_template: int; Minimum number of acceptable tokens to be considered as a template
+        :param min_tokens_per_template: int; Minimum number of tokens to be extracted for each template
         """
         self.cv = None
         self.km = None
@@ -154,7 +154,8 @@ class TemplateClassifier:
             temp_df = self.__form_template_data.loc[self.__form_template_data[form] > int(self.MIN_TOKENS)].replace(0,
                                                                                                                     NaN)
             temp_df = temp_df.dropna(thresh=temp_df.shape[0] * 0.05, axis=1)
-            self.templates_[form] = set(temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index)
+            self.templates_[form] = set(
+                temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index).union([form])
 
         print(" Done +|")
         return
