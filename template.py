@@ -38,11 +38,12 @@ class TemplateClassifier:
         self.cv = CountVectorizer(**kwargs)
         data = self.cv.fit_transform(data)
         print(" |+ Vectorizer fit completed. ==> ", self.cv)
-        data_trans_df = pd.DataFrame(data.toarray(), columns=self.cv.get_feature_names())
+
         print(" |+ Extracting core Vectorizer.. ", end='')
         self.cv = CountVectorizer(**kwargs, **{'vocabulary': self.cv.vocabulary_})
         print(" Done +|")
-        return data_trans_df
+
+        return data
 
     # Train TemplateClassifier Model for template types - Using Clusters
     def fit_for_cluster(self, data, template_sep=None, n_clusters=2, **kwargs):
@@ -116,7 +117,8 @@ class TemplateClassifier:
             data = pd.Series(data)
 
         print(" |+ Analyzing Contents +|")
-        data_trans_df = self.__fit_cv(data, **kwargs)
+        data_transformed = self.__fit_cv(data, **kwargs)
+        data_trans_df = pd.DataFrame(data_transformed.toarray(), columns=self.cv.get_feature_names())
 
         print(" |+ Extracting templates to fit..", end='')
         # Extracting similar template headers
@@ -133,10 +135,11 @@ class TemplateClassifier:
 
         # Separating content into individual templates to similar templates
         if template_sep is not None:
-            print(f" -- Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
-            data = data.str.split(template_sep)
+            print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
+            data = data.str.split(template_sep.lower())
             data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
         print(" Done +|")
+
         data_trans_df = self.__fit_cv(data, **kwargs)
 
         # Filtering Templates that had some token
@@ -144,10 +147,10 @@ class TemplateClassifier:
         self.__form_template_data = data_trans_df[
             (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
         self.__form_template_data = pd.DataFrame(self.__form_template_data)
-        print(self.__form_template_data)
+
         self.templates_ = dict()
 
-        for form in [self.cv.vocabulary_[e] for e in template_headers]:
+        for form in [self.cv.vocabulary[e] for e in template_headers]:
             temp_df = self.__form_template_data.loc[self.__form_template_data[form] > int(self.MIN_TOKENS)].replace(0,
                                                                                                                     NaN)
             temp_df = temp_df.dropna(thresh=temp_df.shape[0] * 0.05, axis=1)
