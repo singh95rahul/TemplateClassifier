@@ -46,13 +46,14 @@ class TemplateClassifier:
         return data
 
     # Train TemplateClassifier Model for template types - Using Clusters
-    def fit_for_cluster(self, data, template_sep=None, n_clusters=2, **kwargs):
+    def fit_for_cluster(self, data, template_sep=None, n_clusters=2, refit=False, **kwargs):
         """
         Fit the TemplateClassifier with data to extract the common templates' tokens. This method will fit the TC
         and generate token that can be used to identify different common templates among the data.
         :param data: Pd.Series or List; Dataset than should be fitted to the CV
         :param template_sep: Str; Separator to be used for splitting the data into different/smaller templates
         :param n_clusters: int; Default = 2; Number of KMeans clusters to be formed
+        :param refit: Refit the Model. Ignore pre-trained cache
         :param kwargs: Parameters of sklearn.feature_extraction.text.CountVectorizer
         :return: None
         """
@@ -64,7 +65,7 @@ class TemplateClassifier:
         if isinstance(data, list):
             data = pd.Series(data)
 
-        if self.__form_template_data is None:
+        if self.__form_template_data is None or refit:
             print(" |+ Analyzing Contents +|")
             if template_sep is not None:
                 print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
@@ -80,8 +81,10 @@ class TemplateClassifier:
                 (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
             self.__form_template_data = pd.DataFrame(self.__form_template_data)
             print(" Done +|")
+        else:
+            print(" |+ Using Pre-fitted cache +|")
 
-        print(" |+ Fitting K-Means Cluster +|")
+        print(f" |+ Clustering templates for - {n_clusters} clusters +|")
         if n_clusters is not None and isinstance(n_clusters, int) and n_clusters > 1:
             km = KMeans(n_clusters=n_clusters)
             km.fit(self.__form_template_data)
