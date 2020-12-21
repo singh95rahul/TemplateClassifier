@@ -86,11 +86,10 @@ class TemplateClassifier:
 
         print(f" |+ Clustering templates for - {n_clusters} clusters +|")
         if n_clusters is not None and isinstance(n_clusters, int) and n_clusters > 1:
-            km = KMeans(n_clusters=n_clusters)
-            km.fit(self.__form_template_data)
-            self.km = km
-            s_score = silhouette_score(self.__form_template_data, km.labels_)
-            distance = sum(min(cdist(self.__form_template_data, km.cluster_centers_, 'euclidean'),
+            self.km = KMeans(n_clusters=n_clusters)
+            self.km.fit(self.__form_template_data)
+            s_score = silhouette_score(self.__form_template_data, self.km.labels_)
+            distance = sum(min(cdist(self.__form_template_data, self.km.cluster_centers_, 'euclidean'),
                                axis=1)) / self.__form_template_data.shape[0]
             return s_score, distance
         else:
