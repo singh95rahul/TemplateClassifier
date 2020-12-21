@@ -195,7 +195,7 @@ class TemplateClassifier:
         if form_index is None:
             form_index = self.templates_.keys()
 
-        return [(e, {v: k for k, v in self.cv.vocabulary_.items()}[e]) for e in form_index]
+        return [(e, {v: k for k, v in self.cv.vocabulary.items()}[e]) for e in form_index]
 
     # Load TemplateClassifier Model
     def save_model(self, object_name, level=0):
