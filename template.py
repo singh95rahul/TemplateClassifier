@@ -1,10 +1,12 @@
+from itertools import chain
+from pickle import load, dump
+
 import pandas as pd
 from numpy import NaN, min
-from pickle import load, dump
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 from scipy.spatial.distance import cdist
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics import silhouette_score
 
 
 class TemplateClassifier:
@@ -32,10 +34,14 @@ class TemplateClassifier:
         :param kwargs: Parameters of sklearn.feature_extraction.text.CountVectorizer
         :return: Transformed data
         """
+        print(" |+ Fitting Vectorizer +|")
         self.cv = CountVectorizer(**kwargs)
-        data = self.cv.transform(data)
+        data = self.cv.fit_transform(data)
+        print(" |+ Vectorizer fit completed. ==> ", self.cv)
         data_trans_df = pd.DataFrame(data.toarray(), columns=self.cv.get_feature_names())
-        self.cv = CountVectorizer({**kwargs, **{'vocabulary': self.cv.vocabulary_}})
+        print(" |+ Extracting core Vectorizer.. ", end='')
+        self.cv = CountVectorizer(**kwargs, **{'vocabulary': self.cv.vocabulary_})
+        print(" Done +|")
         return data_trans_df
 
     # Train TemplateClassifier Model for template types - Using Clusters
@@ -58,20 +64,20 @@ class TemplateClassifier:
             data = pd.Series(data)
 
         if self.__form_template_data is None:
-            print("\rExtracting templates", end='')
+            print(" |+ Extracting templates +|")
             if template_sep is not None:
                 data = data.str.split(template_sep)
                 data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
             data_trans_df = self.__fit_cv(data, save_cv=True, **kwargs)
 
             # Filtering Templates that had some token
-            print("\rGenerating Standard templates", end='')
+            print(" |+ Generating Standard templates +|")
             self.__form_template_data = data_trans_df[
                 (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
             self.__form_template_data = pd.DataFrame(self.__form_template_data)
 
         if n_clusters is not None and isinstance(n_clusters, int) and n_clusters > 1:
-            print("Fitting K-Means Cluster")
+            print(" |+ Fitting K-Means Cluster +|")
             km = KMeans(n_clusters=n_clusters)
             km.fit(self.__form_template_data)
             self.km = km
@@ -84,15 +90,15 @@ class TemplateClassifier:
 
     # ...
     def predict_cluster(self):
-        pass
+        raise NotImplementedError()
 
     # Train TemplateClassifier Model for template types - Using Tokens
-    def fit_for_template(self, data, template_header, tokens_p_template, template_sep=None, **kwargs):
+    def fit_for_template(self, data, template_headers, tokens_p_template, template_sep=None, **kwargs):
         """
         Fit the TemplateClassifier with data to extract the common templates' tokens. This method will fit the TC
         and generate token that can be used to identify different common templates among the data.
         :param data: Pd.Series or List; Dataset than should be fitted to the CV
-        :param template_header: List; Sample templates token. Like Form Name etc.
+        :param template_headers: List; Sample templates token. Like Form Name etc.
         :param tokens_p_template: int; Number of tokens to be extracted from each template
         :param template_sep: Optional - Str; Separator to be used for splitting the data into different/smaller
             templates, if data is not at template level
@@ -103,47 +109,51 @@ class TemplateClassifier:
         # Checking params
         if not (isinstance(data, pd.Series) or isinstance(data, list)):
             raise TypeError(f"Expected type pd.Series or list, received - {type(data)}")
-        if not isinstance(template_header, list) or len(template_header) == 0:
+        if not isinstance(template_headers, list) or len(template_headers) == 0:
             raise ValueError("template_header should be of type - list, and cannot be empty")
 
         if isinstance(data, list):
             data = pd.Series(data)
 
-        print("Analyzing Contents", end='')
+        print(" |+ Analyzing Contents +|")
         data_trans_df = self.__fit_cv(data, **kwargs)
 
+        print(" |+ Extracting templates to fit..", end='')
         # Extracting similar template headers
-        template_header = [[feature for feature in self.cv.get_feature_names() if header in feature] for header in
-                           template_header]
+        template_headers = list(chain(
+            *[[feature for feature in self.cv.get_feature_names() if header in feature] for header in
+              template_headers]))
 
         # Extracting additional tokens which are part of, templates that has above headers
         # Filtering contents that has template headers
-        data_trans_df = data_trans_df.loc[data_trans_df[template_header].apply(lambda x: any(x > 0),
-                                                                               axis=1)].replace(0, NaN)
+        data_trans_df = data_trans_df.loc[data_trans_df[template_headers].apply(lambda x: any(x > 0),
+                                                                                axis=1)].replace(0, NaN)
         data = data.iloc[data_trans_df.dropna(thresh=data_trans_df.shape[0] * 0.05, axis=1).index]
+        print(" Done +|")
 
         # Separating content into individual templates to similar templates
-        print("\rExtracting templates", end='')
         if template_sep is not None:
+            print(f" -- Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
             data = data.str.split(template_sep)
             data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
-        data_trans_df = self.__fit_cv(data, save_cv=True, **kwargs)
+        print(" Done +|")
+        data_trans_df = self.__fit_cv(data, **kwargs)
 
         # Filtering Templates that had some token
-        print("\rGenerating Standard templates", end='')
+        print(" |+ Generating Standard templates.. ", end='')
         self.__form_template_data = data_trans_df[
             (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
         self.__form_template_data = pd.DataFrame(self.__form_template_data)
-
+        print(self.__form_template_data)
         self.templates_ = dict()
 
-        for form in [self.cv.vocabulary_[e] for e in template_header]:
+        for form in [self.cv.vocabulary_[e] for e in template_headers]:
             temp_df = self.__form_template_data.loc[self.__form_template_data[form] > int(self.MIN_TOKENS)].replace(0,
                                                                                                                     NaN)
             temp_df = temp_df.dropna(thresh=temp_df.shape[0] * 0.05, axis=1)
             self.templates_[form] = set(temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index)
 
-        print("\nStandard templates generated")
+        print(" Done +|")
         return
 
     def __get_form_label(self, x):
