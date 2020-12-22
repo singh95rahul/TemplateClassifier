@@ -136,7 +136,7 @@ class TemplateClassifier:
         # Filtering contents that has template headers
         data_trans_df = data_trans_df.loc[data_trans_df[template_headers].apply(lambda x: any(x > 0),
                                                                                 axis=1)].replace(0, NaN)
-        data = data.iloc[data_trans_df.dropna(thresh=data_trans_df.shape[0] * 0.05, axis=1).index]
+        data = data.iloc[data_trans_df.dropna(thresh=self.MIN_TOKENS, axis=1).index]
         print(" Done +|")
 
         # Separating content into individual templates to similar templates
@@ -157,9 +157,8 @@ class TemplateClassifier:
         self.templates_ = dict()
 
         for form in [self.cv.vocabulary[e] for e in template_headers]:
-            temp_df = self.__form_template_data.loc[self.__form_template_data[form] > int(self.MIN_TOKENS)].replace(0,
-                                                                                                                    NaN)
-            temp_df = temp_df.dropna(thresh=temp_df.shape[0] * 0.05, axis=1)
+            temp_df = self.__form_template_data.loc[self.__form_template_data[form] > 0].replace(0, NaN)
+            temp_df = temp_df.dropna(thresh=self.MIN_TOKENS, axis=1)
             self.templates_[form] = set(
                 temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index).union([form])
 
