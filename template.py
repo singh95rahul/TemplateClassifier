@@ -156,11 +156,12 @@ class TemplateClassifier:
 
         self.templates_ = dict()
 
-        for form in [self.cv.vocabulary[e] for e in template_headers]:
-            temp_df = self.__form_template_data.loc[self.__form_template_data[form] > 0].replace(0, NaN)
-            temp_df = temp_df.dropna(thresh=self.MIN_TOKENS, axis=1)
-            self.templates_[form] = set(
-                temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index).union([form])
+        for form in [self.cv.vocabulary.get(e, None) for e in template_headers]:
+            if form is not None:
+                temp_df = self.__form_template_data.loc[self.__form_template_data[form] > 0].replace(0, NaN)
+                temp_df = temp_df.dropna(thresh=self.MIN_TOKENS, axis=1)
+                self.templates_[form] = set(
+                    temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index).union([form])
 
         print(" Done +|")
         return
