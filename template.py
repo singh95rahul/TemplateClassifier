@@ -201,6 +201,24 @@ class TemplateClassifier:
 
         return [(e, {v: k for k, v in self.cv.vocabulary.items()}[e]) for e in form_index]
 
+    # Manually remove unwanted templates
+    def remove_template(self, templates_to_remove):
+        """
+        Remove templates from the template instance
+        :param templates_to_remove: Iterable object; Key(s) of of templates from TemplateClassifier.templates_
+                                    that should be removed
+        :return: None
+        """
+        if not hasattr(templates_to_remove, '__iter__'):
+            raise TypeError(f"Expected 'templates_to_remove' to be iterable, but passed object of "
+                            f"type - {type(templates_to_remove)}")
+        new_templates = dict()
+        for key, value in self.templates_.items():
+            if key not in templates_to_remove:
+                new_templates[key] = value
+        self.templates_ = new_templates
+        return
+
     # Load TemplateClassifier Model
     def save_model(self, object_name, level=0):
         """
