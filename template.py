@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Dev 20 13:47:06 2020
+
+@author: rsing177
+"""
 from itertools import chain
 from pickle import load, dump
 
@@ -96,7 +102,12 @@ class TemplateClassifier:
             raise ValueError("Invalid value for n_cluster")
 
     # ...
-    def predict_cluster(self):
+    def predict_cluster(self, x):
+        """
+        Classify 'X' to the pre-trained clusters, based on token.
+        :param x: Pd.Series or List;
+        :return: Classified cluster
+        """
         raise NotImplementedError()
 
     # Train TemplateClassifier Model for template types - Using Tokens
