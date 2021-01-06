@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Dev 20 13:47:06 2020
+Created on Sun Dec 20 13:47:06 2020
 
 @author: rsing177
 """
@@ -8,7 +8,7 @@ from itertools import chain
 from pickle import load, dump
 
 import pandas as pd
-from numpy import NaN, min
+from numpy import NaN, min, array
 from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import CountVectorizer
@@ -108,7 +108,25 @@ class TemplateClassifier:
         :param x: Pd.Series or List;
         :return: Classified cluster
         """
-        raise NotImplementedError()
+        # Checking params
+        if not hasattr(self, 'km') or self.km is None:
+            raise AttributeError("TemplateClassifier object not fitted, first fit the object to use predict_cluster")
+        if not hasattr(self, 'cv') or self.cv is None:
+            raise AttributeError("TemplateClassifier object not fitted, first fit the object to use predict_cluster")
+        if not (isinstance(x, pd.Series) or isinstance(x, list)):
+            raise TypeError(f"Expected type pd.Series or list, received - {type(x)}")
+
+        if isinstance(x, list):
+            x = pd.Series(x)
+
+        # Predict Cluster
+        x_test = self.cv.transform(x)
+        y_test = self.km.predict(x_test)
+        pred = list(zip(x_test, y_test))
+
+        # Get Euclidean distance from the cluster centroid
+        euclidean_dist = array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
+        return y_test, euclidean_dist
 
     # Train TemplateClassifier Model for template types - Using Tokens
     def fit_for_template(self, data, template_headers, tokens_p_template, template_sep=None, **kwargs):
@@ -193,6 +211,8 @@ class TemplateClassifier:
 
         # Checking params
         if not hasattr(self, 'templates_') or self.templates_ is None:
+            raise AttributeError("Vocabulary not fitted or provided")
+        if not hasattr(self, 'cv') or self.cv is None:
             raise AttributeError("Vocabulary not fitted or provided")
         if not (isinstance(x, pd.Series) or isinstance(x, list)):
             raise TypeError(f"Expected type pd.Series or list, received - {type(x)}")
