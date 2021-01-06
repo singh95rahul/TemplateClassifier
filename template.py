@@ -168,6 +168,10 @@ class TemplateClassifier:
         data = data.iloc[data_trans_df.dropna(thresh=self.MIN_TOKENS, axis=1).index]
         print(" Done +|")
 
+        if len(data):
+            print(f" |+ Empty dataset after 'MIN_TOKENS' filter", end='')
+            return
+
         # Separating content into individual templates to similar templates
         if template_sep is not None:
             print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
