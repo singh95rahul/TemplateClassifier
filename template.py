@@ -161,6 +161,10 @@ class TemplateClassifier:
             *[[feature for feature in self.cv.get_feature_names() if header in feature] for header in
               template_headers]))
 
+        if not len(template_headers):
+            print(f"\n !! Empty templates header - Try less specific names in template_headers !!")
+            return
+
         # Extracting additional tokens which are part of, templates that has above headers
         # Filtering contents that has template headers
         data_trans_df = data_trans_df.loc[data_trans_df[template_headers].apply(lambda x: any(x > 0),
@@ -169,7 +173,7 @@ class TemplateClassifier:
         print(" Done +|")
 
         if len(data):
-            print(f" |+ Empty dataset after 'MIN_TOKENS' filter", end='')
+            print(f"\n !! Empty dataset after filter - Try reducing MIN_TOKEN and refit !!")
             return
 
         # Separating content into individual templates to similar templates
