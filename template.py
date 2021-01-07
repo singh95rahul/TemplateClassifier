@@ -259,7 +259,7 @@ class TemplateClassifier:
         return
 
     # Load TemplateClassifier Model
-    def save_model(self, object_name, level=0):
+    def save_model(self, object_name, level=1):
         """
         Dump TemplateClassifier instance for future use
         :param object_name: Path/Name of the file in which Model will be dumped
@@ -281,7 +281,7 @@ class TemplateClassifier:
             raise ValueError("Invalid Level given")
 
     # Load TemplateClassifier Model
-    def load_model(self, object_name, level=0):
+    def load_model(self, object_name, level=1):
         """
         Load TemplateClassifier instance for future use
         :param object_name: Path/Name of the file from which Model will be loaded
