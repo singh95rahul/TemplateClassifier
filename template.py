@@ -79,7 +79,7 @@ class TemplateClassifier:
                 data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
                 print(" Done +|")
 
-            data_trans_df = self.__fit_cv(data, **kwargs)
+            data_trans_df = self.__fit_cv(data.copy(), **kwargs)
 
             # Filtering Templates that had some token
             print(" |+ Generating Standard templates.. ", end='')
@@ -126,7 +126,7 @@ class TemplateClassifier:
 
         # Get Euclidean distance from the cluster centroid
         euclidean_dist = array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
-        return y_test, euclidean_dist
+        return y_test, euclidean_dist.reshape(-1,)
 
     # Train TemplateClassifier Model for template types - Using Tokens
     def fit_for_template(self, data, template_headers, tokens_p_template, template_sep=None, **kwargs):
@@ -152,7 +152,7 @@ class TemplateClassifier:
             data = pd.Series(data)
 
         print(" |+ Analyzing Contents +|")
-        data_transformed = self.__fit_cv(data, **kwargs)
+        data_transformed = self.__fit_cv(data.copy(), **kwargs)
         data_trans_df = pd.DataFrame(data_transformed.toarray(), columns=self.cv.get_feature_names())
 
         print(" |+ Extracting templates to fit..", end='')
@@ -172,7 +172,7 @@ class TemplateClassifier:
         data = data.iloc[data_trans_df.dropna(thresh=self.MIN_TOKENS, axis=1).index]
         print(" Done +|")
 
-        if len(data):
+        if not len(data):
             print(f"\n !! Empty dataset after filter - Try reducing MIN_TOKEN and refit !!")
             return
 
@@ -183,7 +183,7 @@ class TemplateClassifier:
             data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
             print(" Done +|")
 
-        data_trans_df = self.__fit_cv(data, **kwargs)
+        data_trans_df = self.__fit_cv(data.copy(), **kwargs)
 
         # Filtering Templates that had some token
         print(" |+ Generating Standard templates.. ", end='')
