@@ -135,7 +135,8 @@ class TemplateClassifier:
         and generate token that can be used to identify different common templates among the data.
         :param data: Pd.Series or List; Dataset than should be fitted to the CV
         :param template_headers: List; Sample templates token. Like Form Name etc.
-        :param tokens_p_template: int; Number of tokens to be extracted from each template
+        :param tokens_p_template: tuple(int, int); (Minimum number of tokens to be extracted from each template,
+                                                    Maximum number of tokens to be extracted from each template)
         :param template_sep: Optional - Str; Separator to be used for splitting the data into different/smaller
             templates, if data is not at template level
         :param kwargs: Parameters of sklearn.feature_extraction.text.CountVectorizer
@@ -147,6 +148,12 @@ class TemplateClassifier:
             raise TypeError(f"Expected type pd.Series or list, received - {type(data)}")
         if not isinstance(template_headers, list) or len(template_headers) == 0:
             raise ValueError("template_header should be of type - list, and cannot be empty")
+        if not hasattr(tokens_p_template, 'index') or len(template_headers) != 2:
+            raise ValueError("tokens_p_template should be of type - list/tuple of length 2")
+
+        tokens_p_template = tuple(map(int, tokens_p_template))
+        if not tokens_p_template[0] < tokens_p_template[1]:
+            raise ValueError("tokens_p_template - Value at index 0 should be less than value at index 1")
 
         if isinstance(data, list):
             data = pd.Series(data)
@@ -192,15 +199,22 @@ class TemplateClassifier:
         self.__form_template_data = pd.DataFrame(self.__form_template_data)
 
         self.templates_ = dict()
+        filtered_templates = []
 
         for form in [self.cv.vocabulary.get(e, None) for e in template_headers]:
             if form is not None:
                 temp_df = self.__form_template_data.loc[self.__form_template_data[form] > 0].replace(0, NaN)
                 temp_df = temp_df.dropna(thresh=self.MIN_TOKENS, axis=1)
-                self.templates_[form] = set(
-                    temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template].index).union([form])
+                form_tokens = set(
+                    temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template[1]].index).union([form])
+                # Filtering templates that does not meet minimum number of token criteria
+                if len(form_tokens) > tokens_p_template[0]:
+                    self.templates_[form] = form_tokens
+                else:
+                    filtered_templates.append(form)
 
         print(" Done +|")
+        print(f"\nNote - Filtered {len(filtered_templates)} templates due to Minimum number of token condition")
         return
 
     def __classify_token_to_form(self, x):
