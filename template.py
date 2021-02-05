@@ -148,7 +148,7 @@ class TemplateClassifier:
             raise TypeError(f"Expected type pd.Series or list, received - {type(data)}")
         if not isinstance(template_headers, list) or len(template_headers) == 0:
             raise ValueError("template_header should be of type - list, and cannot be empty")
-        if not hasattr(tokens_p_template, 'index') or len(template_headers) != 2:
+        if not hasattr(tokens_p_template, 'index') or len(tokens_p_template) != 2:
             raise ValueError("tokens_p_template should be of type - list/tuple of length 2")
 
         tokens_p_template = tuple(map(int, tokens_p_template))
