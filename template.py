@@ -76,7 +76,7 @@ class TemplateClassifier:
             if template_sep is not None:
                 print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
                 data = data.str.split(template_sep)
-                data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
+                data = data.apply(pd.Series).stack().reset_index()[0].replace('', np.NaN).dropna().reset_index(drop=True)
                 print(" Done +|")
 
             data_trans_df = self.__fit_cv(data.copy(), **kwargs)
@@ -125,7 +125,7 @@ class TemplateClassifier:
         pred = list(zip(x_test, y_test))
 
         # Get Euclidean distance from the cluster centroid
-        euclidean_dist = array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
+        euclidean_dist = np.array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
         return y_test, euclidean_dist.reshape(-1,)
 
     # Train TemplateClassifier Model for template types - Using Tokens
@@ -255,9 +255,8 @@ class TemplateClassifier:
         if isinstance(x, list):
             x = pd.Series(x)
 
-        temp = self.cv.transform(x)
-        form_label = pd.DataFrame(temp.toarray()).apply(lambda _x: self.__classify_token_to_form(_x[_x > 0].index),
-                                                        axis=1)
+        x_transformed = self.cv.transform(x)
+        form_label = np.array(list(map(lambda _x: self.__classify_token_to_form(_x.nonzero()[1]), x_transformed)))
         return form_label
 
     # Convert token index to label
@@ -265,7 +264,10 @@ class TemplateClassifier:
         if form_index is None:
             form_index = self.templates_.keys()
 
-        return [(e, {v: k for k, v in self.cv.vocabulary.items()}[e]) for e in form_index]
+        if isinstance(form_index, int):
+            return {v: k for k, v in self.cv.vocabulary.items()}.get(form_index, None)
+        return list(filter(lambda x: x[1] is not None,
+                           [(e, {v: k for k, v in self.cv.vocabulary.items()}.get(e, None)) for e in form_index]))
 
     # Manually remove unwanted templates
     def remove_template(self, templates_to_remove):

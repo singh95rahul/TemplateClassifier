@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c82f8876-a43b-4e2b-8b53-0095e1c338f5" name="Default Changelist" comment="Added References">
-      <change afterPath="$PROJECT_DIR$/.idea/StandardForm.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c82f8876-a43b-4e2b-8b53-0095e1c338f5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/template.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,13 +16,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/template.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+            <state relative-caret-position="656">
+              <caret line="260" lean-forward="true" selection-start-line="260" selection-end-line="260" />
               <folding>
                 <element signature="e#87#114#0" expanded="true" />
-                <element signature="e#2074#4626#0" />
-                <element signature="e#4680#5817#0" />
-                <element signature="e#11052#11956#0" />
               </folding>
             </state>
           </provider>
@@ -74,7 +68,7 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="y" value="2" />
-    <option name="width" value="1932" />
+    <option name="width" value="1294" />
     <option name="height" value="1024" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -346,11 +340,18 @@
       <option name="project" value="LOCAL" />
       <updated>1618914290879</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added additional references">
+      <created>1618916582000</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1618916582000</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1035" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1035" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15208334" />
@@ -400,7 +401,8 @@
     <MESSAGE value="Minor Bug Fix" />
     <MESSAGE value="Added References" />
     <MESSAGE value="Enhanced fit_to_template logic to handle bigger dataset" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enhanced fit_to_template logic to handle bigger dataset" />
+    <MESSAGE value="Added additional references" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added additional references" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wrapper.py" />
@@ -448,15 +450,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/REF/Building+TemplateClassifier.ipynb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/template.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+        <state relative-caret-position="656">
+          <caret line="260" lean-forward="true" selection-start-line="260" selection-end-line="260" />
           <folding>
             <element signature="e#87#114#0" expanded="true" />
-            <element signature="e#2074#4626#0" />
-            <element signature="e#4680#5817#0" />
-            <element signature="e#11052#11956#0" />
           </folding>
         </state>
       </provider>
