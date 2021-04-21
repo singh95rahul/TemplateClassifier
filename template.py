@@ -6,6 +6,7 @@ Created on Sun Dec 20 13:47:06 2020
 """
 from itertools import chain
 from pickle import load, dump
+from time import time
 
 import pandas as pd
 import numpy as np
@@ -40,6 +41,7 @@ class TemplateClassifier:
         :param kwargs: Parameters of sklearn.feature_extraction.text.CountVectorizer
         :return: Transformed data
         """
+        start = time()
         print(" |+ Fitting Vectorizer +|")
         self.cv = CountVectorizer(**kwargs)
         data = self.cv.fit_transform(data)
@@ -47,8 +49,7 @@ class TemplateClassifier:
 
         print(" |+ Extracting core Vectorizer.. ", end='')
         self.cv = CountVectorizer(**kwargs, **{'vocabulary': self.cv.vocabulary_})
-        print(" Done +|")
-
+        print(" Done +| ETA = ", time() - start)
         return data
 
     # Train TemplateClassifier Model for template types - Using Clusters
@@ -185,6 +186,7 @@ class TemplateClassifier:
         # Finally - Applying the filter.
         # Outcome - Cases that have more than minimum number of tokens and also have required tokens
         filter_index = np.array(sorted(list(set(filter1).intersection(filter2))))
+        data = data[filter_index]
         print(" Done +|")
 
         if not len(data):
