@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c82f8876-a43b-4e2b-8b53-0095e1c338f5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/template.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/template.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="717">
+              <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
+              <folding>
+                <element signature="e#87#114#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/REF/standard_form_template - Ref.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="67" column="21" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
+              <folding>
+                <element signature="e#25#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>vocabulary</find>
+      <find>timeit</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>time</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/wrapper.py" />
+        <option value="$PROJECT_DIR$/utilities/extras.py" />
+        <option value="$PROJECT_DIR$/utilities/tokenizer.py" />
+        <option value="$PROJECT_DIR$/utilities/preprocessing.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/REF/standard_form_template - Ref.py" />
+        <option value="$PROJECT_DIR$/template.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-7" />
+    <option name="y" value="2" />
+    <option name="width" value="1294" />
+    <option name="height" value="1024" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="StandardForm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StandardForm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StandardForm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StandardForm" type="462c0819:PsiDirectoryNode" />
+              <item name="REF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StandardForm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StandardForm" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Standard UHC Form" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utilities" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utilities/preprocessing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.preprocessing" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c82f8876-a43b-4e2b-8b53-0095e1c338f5" name="Default Changelist" comment="" />
+      <created>1608449393778</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608449393778</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Removed Redundant Files">
+      <created>1608532834234</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608532834234</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added intermediate checkpoints">
+      <created>1608546238922</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1608546238922</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Removed system cache">
+      <created>1608546283052</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1608546283052</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Bug fix - fit_for_template">
+      <created>1608547701151</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608547701151</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added method get_form_label + bug fix in dump model &amp; load model">
+      <created>1608549191815</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608549191815</updated>
+    </task>
+    <task id="LOCAL-00006" summary="change cv param">
+      <created>1608550469969</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608550469969</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Enhanced Save &amp; Load module">
+      <created>1608550905611</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608550905611</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Minor Bug Fix">
+      <created>1608554187895</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608554187895</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added form header to form token">
+      <created>1608555186900</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1608555186900</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated fit_for_cluster module">
+      <created>1608564179564</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1608564179564</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added Force refit param to fit_for_cluster">
+      <created>1608565405824</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1608565405824</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed cluster object reference">
+      <created>1608566155054</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1608566155054</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Adjusted Thresholds">
+      <created>1608647026815</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608647026815</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Handled empty token scenario in page vectorization">
+      <created>1608658856768</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608658856768</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Added Module - remove_template">
+      <created>1608817562878</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1608817562878</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added watermark">
+      <created>1609828642785</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1609828642785</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added Predict_cluster">
+      <created>1609931717576</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1609931717576</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Minor Bug Fix - Handled empty dataset scenario after filter">
+      <created>1609937426889</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1609937426889</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added warning &amp; hints for better experience">
+      <created>1609940173689</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1609940173689</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Change default pickle save type - Full from Partial">
+      <created>1610013647311</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1610013647311</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Bug Fix - Empty dataset after filter">
+      <created>1610436990207</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1610436990207</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Changed tokens_per_template from int to tuple - Now we can pass minimum and maximum token range">
+      <created>1611732578673</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1611732578673</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Minor Bug Fix">
+      <created>1612546226997</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1612546226997</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Added References">
+      <created>1613659572951</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1613659572951</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added References">
+      <created>1613659910131</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1613659910131</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Enhanced fit_to_template logic to handle bigger dataset">
+      <created>1618914290879</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1618914290879</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Added additional references">
+      <created>1618916582000</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1618916582000</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated predict_template for compatibility">
+      <created>1618926249533</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1618926249533</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1035" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15208334" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3297414" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3297414" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="SOQL Query" order="8" />
+      <window_info anchor="bottom" id="Log Analyzer" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Anonymous Apex" order="12" />
+      <window_info anchor="bottom" id="Python Console" order="13" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added intermediate checkpoints" />
+    <MESSAGE value="Removed system cache" />
+    <MESSAGE value="Bug fix - fit_for_template" />
+    <MESSAGE value="Added method get_form_label + bug fix in dump model &amp; load model" />
+    <MESSAGE value="change cv param" />
+    <MESSAGE value="Enhanced Save &amp; Load module" />
+    <MESSAGE value="Added form header to form token" />
+    <MESSAGE value="Updated fit_for_cluster module" />
+    <MESSAGE value="Added Force refit param to fit_for_cluster" />
+    <MESSAGE value="Fixed cluster object reference" />
+    <MESSAGE value="Adjusted Thresholds" />
+    <MESSAGE value="Handled empty token scenario in page vectorization" />
+    <MESSAGE value="Added Module - remove_template" />
+    <MESSAGE value="Added watermark" />
+    <MESSAGE value="Added Predict_cluster" />
+    <MESSAGE value="Minor Bug Fix - Handled empty dataset scenario after filter" />
+    <MESSAGE value="Added warning &amp; hints for better experience" />
+    <MESSAGE value="Change default pickle save type - Full from Partial" />
+    <MESSAGE value="Bug Fix - Empty dataset after filter" />
+    <MESSAGE value="Changed tokens_per_template from int to tuple - Now we can pass minimum and maximum token range" />
+    <MESSAGE value="Minor Bug Fix" />
+    <MESSAGE value="Added References" />
+    <MESSAGE value="Enhanced fit_to_template logic to handle bigger dataset" />
+    <MESSAGE value="Added additional references" />
+    <MESSAGE value="Updated predict_template for compatibility" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated predict_template for compatibility" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/wrapper.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/dev1/Lib/site-packages/sklearn/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/preprocessing.py" />
+    <entry file="file://$PROJECT_DIR$/utilities/extras.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/dev1/Lib/site-packages/sklearn/feature_extraction/text.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35694">
+          <caret line="1536" column="6" selection-start-line="1536" selection-start-column="6" selection-end-line="1536" selection-end-column="6" />
+          <folding>
+            <element signature="e#29580#37828#1" />
+            <element signature="e#56988#65519#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/REF/Urgency+FP+Analysis+-+Common+Form+Cluster.ipynb">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/tokenizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/REF/standard_form_template - Ref.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="67" column="21" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
+          <folding>
+            <element signature="e#25#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/REF/Building+TemplateClassifier.ipynb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="717">
+          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
+          <folding>
+            <element signature="e#87#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

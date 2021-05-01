@@ -6,9 +6,10 @@ Created on Sun Dec 20 13:47:06 2020
 """
 from itertools import chain
 from pickle import load, dump
+from time import time
 
 import pandas as pd
-from numpy import NaN, min, array
+import numpy as np
 from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import CountVectorizer
@@ -40,6 +41,7 @@ class TemplateClassifier:
         :param kwargs: Parameters of sklearn.feature_extraction.text.CountVectorizer
         :return: Transformed data
         """
+        start = time()
         print(" |+ Fitting Vectorizer +|")
         self.cv = CountVectorizer(**kwargs)
         data = self.cv.fit_transform(data)
@@ -47,8 +49,7 @@ class TemplateClassifier:
 
         print(" |+ Extracting core Vectorizer.. ", end='')
         self.cv = CountVectorizer(**kwargs, **{'vocabulary': self.cv.vocabulary_})
-        print(" Done +|")
-
+        print(" Done +| ETA = ", time() - start)
         return data
 
     # Train TemplateClassifier Model for template types - Using Clusters
@@ -76,7 +77,7 @@ class TemplateClassifier:
             if template_sep is not None:
                 print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
                 data = data.str.split(template_sep)
-                data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
+                data = data.apply(pd.Series).stack().reset_index()[0].replace('', np.NaN).dropna().reset_index(drop=True)
                 print(" Done +|")
 
             data_trans_df = self.__fit_cv(data.copy(), **kwargs)
@@ -125,7 +126,7 @@ class TemplateClassifier:
         pred = list(zip(x_test, y_test))
 
         # Get Euclidean distance from the cluster centroid
-        euclidean_dist = array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
+        euclidean_dist = np.array(list((chain(*[cdist(_x.todense(), self.km.cluster_centers_[_l:_l + 1], 'euclidean') for _x, _l in pred]))))
         return y_test, euclidean_dist.reshape(-1,)
 
     # Train TemplateClassifier Model for template types - Using Tokens
@@ -160,7 +161,7 @@ class TemplateClassifier:
 
         print(" |+ Analyzing Contents +|")
         data_transformed = self.__fit_cv(data.copy(), **kwargs)
-        data_trans_df = pd.DataFrame(data_transformed.toarray(), columns=self.cv.get_feature_names())
+        data_trans_array = data_transformed.toarray()
 
         print(" |+ Extracting templates to fit..", end='')
         # Extracting similar template headers
@@ -174,9 +175,18 @@ class TemplateClassifier:
 
         # Extracting additional tokens which are part of, templates that has above headers
         # Filtering contents that has template headers
-        data_trans_df = data_trans_df.loc[data_trans_df[template_headers].apply(lambda x: any(x > 0),
-                                                                                axis=1)].replace(0, NaN)
-        data = data.iloc[data_trans_df.dropna(thresh=self.MIN_TOKENS, axis=1).index]
+        # Extracting index of the features/template headers
+        idx_headers = np.array([self.cv.get_feature_names().index(head) for head in template_headers])
+
+        # Filtering out the templates that does not have any required tokens
+        filter1 = (data_trans_array[:, idx_headers].sum(axis=1) > 0).astype(int).nonzero()[0]
+        # Filtering out the templates that does not have minimum number of tokens
+        filter2 = (np.count_nonzero(data_trans_array, axis=1) > self.MIN_TOKENS).astype(int).nonzero()[0]
+
+        # Finally - Applying the filter.
+        # Outcome - Cases that have more than minimum number of tokens and also have required tokens
+        filter_index = np.array(sorted(list(set(filter1).intersection(filter2))))
+        data = data[filter_index]
         print(" Done +|")
 
         if not len(data):
@@ -187,26 +197,31 @@ class TemplateClassifier:
         if template_sep is not None:
             print(f" |+ Splitting Templates form content, using separator - '{template_sep}'.. ", end='')
             data = data.str.split(template_sep.lower())
-            data = data.apply(pd.Series).stack().reset_index()[0].replace('', NaN).dropna().reset_index(drop=True)
+            data = data.apply(pd.Series).stack().reset_index()[0].replace('', np.NaN).dropna().reset_index(drop=True)
             print(" Done +|")
 
-        data_trans_df = self.__fit_cv(data.copy(), **kwargs)
+        data_transformed = self.__fit_cv(data.copy(), **kwargs)
 
         # Filtering Templates that had some token
         print(" |+ Generating Standard templates.. ", end='')
-        self.__form_template_data = data_trans_df[
-            (data_trans_df.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
-        self.__form_template_data = pd.DataFrame(self.__form_template_data)
+        self.__form_template_data = data_transformed[
+            (data_transformed.sum(axis=1) > int(self.MIN_TOKENS)).reshape(-1).nonzero()[-1]].toarray()
 
         self.templates_ = dict()
         filtered_templates = []
 
         for form in [self.cv.vocabulary.get(e, None) for e in template_headers]:
             if form is not None:
-                temp_df = self.__form_template_data.loc[self.__form_template_data[form] > 0].replace(0, NaN)
-                temp_df = temp_df.dropna(thresh=self.MIN_TOKENS, axis=1)
-                form_tokens = set(
-                    temp_df.count(axis=0).sort_values(ascending=False)[:tokens_p_template[1]].index).union([form])
+                temp_page_data = self.__form_template_data[self.__form_template_data[:, form] > 0]
+                temp_page_data = temp_page_data[np.count_nonzero(temp_page_data, axis=1) > 9]
+
+                # Selecting the indexes of the tokens from the template which are most commonly occurring
+                form_tokens = list(
+                    sorted(zip(range(len(self.cv.get_feature_names())), np.count_nonzero(temp_page_data, axis=0)),
+                           reverse=True, key=lambda x: x[1]))
+                form_tokens = np.array([ele[0] for ele in form_tokens])[:tokens_p_template[1]]
+                form_tokens = set(form_tokens).union([form])
+
                 # Filtering templates that does not meet minimum number of token criteria
                 if len(form_tokens) > tokens_p_template[0]:
                     self.templates_[form] = form_tokens
@@ -242,9 +257,8 @@ class TemplateClassifier:
         if isinstance(x, list):
             x = pd.Series(x)
 
-        temp = self.cv.transform(x)
-        form_label = pd.DataFrame(temp.toarray()).apply(lambda _x: self.__classify_token_to_form(_x[_x > 0].index),
-                                                        axis=1)
+        x_transformed = self.cv.transform(x)
+        form_label = np.array(list(map(lambda _x: self.__classify_token_to_form(_x.nonzero()[1]), x_transformed)))
         return form_label
 
     # Convert token index to label
@@ -252,7 +266,10 @@ class TemplateClassifier:
         if form_index is None:
             form_index = self.templates_.keys()
 
-        return [(e, {v: k for k, v in self.cv.vocabulary.items()}[e]) for e in form_index]
+        if isinstance(form_index, int):
+            return {v: k for k, v in self.cv.vocabulary.items()}.get(form_index, None)
+        return list(filter(lambda x: x[1] is not None,
+                           [(e, {v: k for k, v in self.cv.vocabulary.items()}.get(e, None)) for e in form_index]))
 
     # Manually remove unwanted templates
     def remove_template(self, templates_to_remove):
